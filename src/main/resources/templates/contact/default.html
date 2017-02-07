@@ -5,6 +5,11 @@
     <title>Default</title>
 </head>
 <body>
+
+    <div class="navbar" th:include="fragments/navbar :: navbarFrag">
+        This is inside content
+    </div>
+
     This is the default page
 
     Today is: <p th:text="${date}"></p>
