@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Default</title>
+</head>
+<body>
+    This is the default page
+
+    Today is: <p th:text="${date}"></p>
+
+    <h2>List</h2>
+    <ul>
+        <span th:each="name : ${names}">
+            <li th:text="${name}"></li>
+        </span>
+    </ul>
+
+    <br/>
+</body>
+</html>
