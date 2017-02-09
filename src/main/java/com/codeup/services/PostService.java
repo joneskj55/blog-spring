@@ -13,6 +13,12 @@ public class PostService {
 
     private List<Post> posts = new ArrayList<>();
 
+    private void createPosts() {
+        for (int i = 0; i < 100; i++) {
+            save(new Post("title" + " " + (i + 1), "Some body content" + " " +(i + 2) ));
+        }
+    }
+
     public PostService() {
         // This runs by the time the class is created
         createPosts();
@@ -32,23 +38,6 @@ public class PostService {
     //find one post
     public Post findOne(int id) {
         return posts.get(id - 1) ;
-    }
-
-    //Luis' PostService loop
-//    public PostService() {
-//        for (int i = 0; i < 100; i++) {
-//            posts.add(
-//                    new Post(i+1, "Title" + (i + 1), "Body" + (i + 1))
-//            );
-//        }
-//    }
-    private void createPosts() {
-        // create some post objects and add them to the posts list with the save method
-
-        for (int i = 0; i < 100; i++) {
-            save(new Post("title" + " " + (i + 1), "Some body content" + " " +(i + 2) ));
-        }
-
     }
 }
 

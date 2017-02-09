@@ -1,12 +1,19 @@
 package com.codeup.models;
 
+import javax.persistence.*;
+
 /**
  * Created by kevinjones on 2/8/17.
  */
+@Entity
+@Table(name = "posts")
 public class Post {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false, length = 100)
     private String title;
+    @Column(nullable = false, length = 2000)
     private String body;
 
     public Post(String title, String body) {
@@ -16,7 +23,6 @@ public class Post {
 
     public Post() {
     }
-
 
     public String getTitle() {
         return title;

@@ -1,6 +1,7 @@
 package com.codeup.controllers;
 
 import com.codeup.models.Post;
+import com.codeup.repositories.Posts;
 import com.codeup.services.PostService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class PostsController {
     @Autowired
     PostService postService;
 
+    @Autowired
+    Posts postsDao;
+
     @GetMapping("/posts")
     public String viewAllPosts(Model viewModel) {
         List<Post> posts = postService.findAll(); // array list with several Post objects
@@ -34,12 +38,9 @@ public class PostsController {
     }
 
     @GetMapping("/posts/{id}")
-    public String viewSinglePost(@PathVariable long id, Model model) {
-
-        Post post = new Post("Generic Title", "Generic Body");
-        model.addAttribute("post", post);
-        // one Post object
-
+    public String ViewSinglePost(@PathVariable int id, Model viewModel) {
+        Post post = postService.findOne(id);
+        viewModel.addAttribute("post", post);
         return "/posts/show";
     }
 
@@ -52,9 +53,10 @@ public class PostsController {
 
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post, Model viewModel) {
+        postsDao.save(post);
         postService.save(post);
         viewModel.addAttribute("post", post);
-        return "posts/create";
+        return "redirect:/posts";
     }
 
     @PostMapping("/posts/{id}/edit")

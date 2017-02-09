@@ -1,12 +1,17 @@
 package com.codeup.models;
 
+import javax.persistence.*;
+
 /**
  * Created by kevinjones on 2/9/17.
  */
+
 public class Ad {
+
     private long id;
     private String title;
     private String description;
+
 
     public Ad(String title, String description) {
         this.title = title;
