@@ -58,4 +58,14 @@ public class HelloWorldController {
         model.addAttribute("names", names);
         return "contact/default";
     }
+
+    @GetMapping("/resume")
+    public String showResume() {
+        return "fragments/resume";
+    }
+
+    @GetMapping("/portfolio")
+    public String showPortfolio() {
+        return "fragments/portfolio";
+    }
 }
