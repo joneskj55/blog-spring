@@ -23,14 +23,14 @@ public class PostsController {
 
     @GetMapping("/posts")
     public String viewAllPosts(Model viewModel) {
-        List<Post> posts = new ArrayList<>(); // array list with several Post objects
+        List<Post> posts = postService.findAll(); // array list with several Post objects
 
         // pass the list to the view (through a view model)
-        posts.add(new Post("First Post", "Some content here"));
-        posts.add(new Post("Here is another post", "Body of post"));
+//        posts.add(new Post("First Post", "Some content here"));
+//        posts.add(new Post("Here is another post", "Body of post"));
         viewModel.addAttribute("posts", posts);
 
-        return "posts index page"; // posts/index
+        return "posts/index"; // posts/index
     }
 
     @GetMapping("/posts/{id}")
@@ -55,5 +55,11 @@ public class PostsController {
         postService.save(post);
         viewModel.addAttribute("post", post);
         return "posts/create";
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    public String editPost(@PathVariable int id, Model viewModel) {
+        viewModel.addAttribute("post", postService.findOne(id));
+        return "posts/edit";
     }
 }
