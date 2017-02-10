@@ -28,19 +28,14 @@ public class PostsController {
     @GetMapping("/posts")
     public String viewAllPosts(Model viewModel) {
         List<Post> posts = postService.findAll(); // array list with several Post objects
-
-        // pass the list to the view (through a view model)
-//        posts.add(new Post("First Post", "Some content here"));
-//        posts.add(new Post("Here is another post", "Body of post"));
         viewModel.addAttribute("posts", posts);
-
         return "posts/index"; // posts/index
     }
 
     @GetMapping("/posts/{id}")
     public String ViewSinglePost(@PathVariable int id, Model viewModel) {
-        Post post = postService.findOne(id);
-        viewModel.addAttribute("post", post);
+//        Post post = postService.findOne(id);
+        viewModel.addAttribute("post", postsDao.findOne(id));
         return "/posts/show";
     }
 
@@ -59,9 +54,23 @@ public class PostsController {
         return "redirect:/posts";
     }
 
-    @PostMapping("/posts/{id}/edit")
-    public String editPost(@PathVariable int id, Model viewModel) {
-        viewModel.addAttribute("post", postService.findOne(id));
-        return "posts/edit";
+    @GetMapping("posts/{id}/edit")
+    public String editPost(@PathVariable int id, @ModelAttribute Post post, Model viewModel) {
+        //viewModel.addAttribute("post", postDao.findOne(id));
+        Post editedPost = postsDao.findOne(id);
+        viewModel.addAttribute("post", editedPost);
+        return "/posts/edit";
+    }
+
+    @PostMapping("posts/{id}/edit")
+    public String updatePost (@ModelAttribute Post editedPost) {
+        postsDao.save(editedPost);
+        return "redirect:/posts";
+    }
+
+    @PostMapping("/posts/delete")
+    public String deletePost(@ModelAttribute Post post) {
+        postsDao.delete(postsDao.findOne(post.getId()));
+        return "redirect:/posts";
     }
 }

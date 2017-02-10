@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
  * Created by kevinjones on 2/9/17.
  */
 @Repository
-public interface Posts extends CrudRepository<Post, Long>{
+public interface Posts extends CrudRepository<Post, Integer>{
 
 }

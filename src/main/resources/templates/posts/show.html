@@ -9,6 +9,15 @@
 <div th:object ="${post}">
     <h2 th:text="*{title}"></h2>
     <p th:text="*{body}"></p>
+
+    <!--<p>Posted by <span th:text="*{user.username}">some user</span> on <span th:text="${#dates.format(post.createDate, 'MMM dd YYY')}"></span> </p>-->
+
+    <a class="btn btn-primary" th:href="@{'/posts/'+${post.id} +'/edit'}">Edit</a>
+
+    <form th:method="POST" th:action="@{/posts/delete}">
+        <input type="hidden" name="id" th:value="${post.id}"/>
+        <button class="btn btn-danger">Delete</button>
+        </form>
 </div>
 </body>
 </html>

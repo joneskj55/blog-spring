@@ -1,5 +1,7 @@
 package com.codeup.services;
 import com.codeup.models.Post;
+import com.codeup.repositories.Posts;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,6 +14,12 @@ import java.util.List;
 public class PostService {
 
     private List<Post> posts = new ArrayList<>();
+    private Posts repository;
+
+    @Autowired
+    public PostService(Posts repository) {
+        this.repository = repository;
+    }
 
     private void createPosts() {
         for (int i = 0; i < 100; i++) {
@@ -32,7 +40,8 @@ public class PostService {
 
     //retrieving all the posts
     public List<Post> findAll() {
-        return posts;
+        //iterable -> List (casting it)
+        return (List<Post>) repository.findAll(); //select * from posts
     }
 
     //find one post
