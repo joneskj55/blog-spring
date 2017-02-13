@@ -1,5 +1,6 @@
 package com.codeup.controllers;
 import com.codeup.models.Post;
+import com.codeup.models.User;
 import com.codeup.repositories.PostsRepository;
 import com.codeup.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +17,16 @@ import java.util.List;
 @Controller
 public class PostsController {
 
-    @Autowired
-    PostService postService;
+//    @Autowired
+//    PostService postService;
 
     @Autowired
     PostsRepository postsDao;
 
     @GetMapping("/posts")
     public String viewAllPosts(Model viewModel) {
-        List<Post> posts = postService.findAll(); // array list with several Post objects
-        viewModel.addAttribute("posts", posts);
+//        List<Post> posts = postService.findAll(); // array list with several Post objects
+        viewModel.addAttribute("posts", postsDao.findAll());
         return "posts/index"; // posts/index
     }
 
@@ -45,8 +46,11 @@ public class PostsController {
 
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post, Model viewModel) {
+        User user = new User();
+        user.setId(1);
+        post.setUser(user);
         postsDao.save(post);
-        postService.save(post);
+//        postService.save(post);
         viewModel.addAttribute("post", post);
         return "redirect:/posts";
     }
