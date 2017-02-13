@@ -11,10 +11,22 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(nullable = false, length = 100)
     private String title;
+
     @Column(nullable = false, length = 2000)
     private String body;
+
+    //will define your foreign key
+    //I will use a convention 'the_other_table_name_id'
+    @ManyToOne
+    @JoinColumn(name = "user_id") //defined at the table level
+    private User user; //owner, author
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Post(String title, String body) {
         this.title = title;
@@ -22,6 +34,10 @@ public class Post {
     }
 
     public Post() {
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public String getTitle() {

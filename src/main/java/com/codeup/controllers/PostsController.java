@@ -1,15 +1,12 @@
 package com.codeup.controllers;
-
 import com.codeup.models.Post;
-import com.codeup.repositories.Posts;
+import com.codeup.repositories.PostsRepository;
 import com.codeup.services.PostService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +20,7 @@ public class PostsController {
     PostService postService;
 
     @Autowired
-    Posts postsDao;
+    PostsRepository postsDao;
 
     @GetMapping("/posts")
     public String viewAllPosts(Model viewModel) {
@@ -63,7 +60,7 @@ public class PostsController {
     }
 
     @PostMapping("posts/{id}/edit")
-    public String updatePost (@ModelAttribute Post editedPost) {
+    public String updatePost(@ModelAttribute Post editedPost) {
         postsDao.save(editedPost);
         return "redirect:/posts";
     }
