@@ -4,10 +4,12 @@ import com.codeup.models.User;
 import com.codeup.repositories.PostsRepository;
 import com.codeup.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,8 +28,13 @@ public class PostsController {
     @GetMapping("/posts")
     public String viewAllPosts(Model viewModel) {
 //        List<Post> posts = postService.findAll(); // array list with several Post objects
-        viewModel.addAttribute("posts", postsDao.findAll());
+        viewModel.addAttribute("posts", Collections.emptyList());
         return "posts/index"; // posts/index
+    }
+
+    @GetMapping("/posts.json")
+    public @ResponseBody List<Post> retrieveAllPosts() {
+        return (List<Post>) postsDao.findAll(); // this may need to say repository.findAll() (PostService.java)
     }
 
     @GetMapping("/posts/{id}")
@@ -46,7 +53,7 @@ public class PostsController {
 
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post, Model viewModel) {
-        User user = new User();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user.setId(1);
         post.setUser(user);
         postsDao.save(post);

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Register</title>
+</head>
+<body>
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input
+            type="text"
+            class="form-control"
+            name="username"
+            id="username"
+        >
+     </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input
+            type="text"
+            class="form-control"
+            name="email"
+            id="email"
+        >
+     </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+        >
+     </div>
+    <button type="submit" class="btn-primary">Register</button>
+    <input type="hidden" th:attr="name=${_csrf.parameterName},value=${_csrf.token}"/>
+    <span th:replace="fragments :: scripts"/> //this might not exist
+</body>
+</html>

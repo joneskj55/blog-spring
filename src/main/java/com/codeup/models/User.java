@@ -1,5 +1,8 @@
 package com.codeup.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,6 +20,8 @@ public class User {
     private String username;
 
     @Column(nullable = false)
+    //need to add code here
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false)
@@ -45,6 +50,7 @@ public class User {
     }
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //defined at the object level
+    @JsonBackReference
     private List<Post> posts; //these are all the posts created by this user
 
     public List<Post> getPosts() {

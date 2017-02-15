@@ -1,6 +1,10 @@
 package com.codeup.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 /**
  * Created by kevinjones on 2/8/17.
@@ -13,15 +17,19 @@ public class Post {
     private int id;
 
     @Column(nullable = false, length = 100)
+    @NotBlank(message = "Title cannot be empty.")
     private String title;
 
     @Column(nullable = false, length = 2000)
+    @NotBlank(message = "Body cannot be empty")
+    @Size(min = 5, message = "Body must have at least 5 characters.")
     private String body;
 
     //will define your foreign key
     //I will use a convention 'the_other_table_name_id'
     @ManyToOne
     @JoinColumn(name = "user_id") //defined at the table level
+    @JsonManagedReference
     private User user; //owner, author
 
     public void setUser(User user) {
